@@ -145,52 +145,55 @@ const Home: NextPage = (props) => {
         handleCancelAddTAcct,
       }}
     >
-      <Heading
-        bgColor='black'
-        color='whiteAlpha.900'
-        textAlign={'center'}
-        as='h1'
-        size='lg'
-        p={2}
-      >
-        T Acount Helper
-      </Heading>
+      <main>
+        <Heading
+          bgColor='black'
+          color='whiteAlpha.900'
+          textAlign={'center'}
+          as='h1'
+          size='lg'
+          p={2}
+        >
+          T Acount Helper
+        </Heading>
 
-      <Heading as='h2' size='md' textAlign='center' p={2}>
-        Balance: {Math.abs(balance)}{' '}
-        {balance !== 0 ? (balance > 0 ? '(Debit)' : '(Credit)') : ''}
-      </Heading>
+        <Heading as='h2' size='md' textAlign='center' p={2}>
+          Balance: {Math.abs(balance)}{' '}
+          {balance !== 0 ? (balance > 0 ? '(Debit)' : '(Credit)') : ''}
+        </Heading>
 
-      <Grid
-        templateColumns={{
-          base: 'repeat(1, 1fr)',
-          md: 'repeat(2, 1fr)',
-          xl: 'repeat(3, 1fr)',
-        }}
-        p={2}
-      >
-        {tAcctElems}
+        <Grid
+          templateColumns={{
+            base: 'repeat(1, 1fr)',
+            md: 'repeat(2, 1fr)',
+            xl: 'repeat(3, 1fr)',
+          }}
+          p={2}
+        >
+          {tAcctElems}
 
-        <GridItem>
-          {shouldAddTAcct ? (
-            <AddTAcctForm
-              isInvalid={typeof errorMessage === 'string'}
-              errorMessage={errorMessage}
-              onSubmit={addTAccount}
-            />
-          ) : (
-            <Grid templateColumns='repeat(10, 1fr)' p={2}>
-              <GridItem colStart={1} colSpan={8}>
-                <Flex justifyContent='center'>
-                  <Button onClick={() => setShouldAddTAcct(true)}>
-                    Add T-Account
-                  </Button>
-                </Flex>
-              </GridItem>
-            </Grid>
-          )}
-        </GridItem>
-      </Grid>
+          <GridItem>
+            {shouldAddTAcct ? (
+              <AddTAcctForm
+                isInvalid={typeof errorMessage === 'string'}
+                errorMessage={errorMessage}
+                onSubmit={addTAccount}
+              />
+            ) : (
+              <Grid templateColumns='repeat(10, 1fr)' p={2}>
+                <GridItem colStart={1} colSpan={8}>
+                  <Flex justifyContent='center'>
+                    <Button onClick={() => setShouldAddTAcct(true)}>
+                      Add T-Account
+                    </Button>
+                  </Flex>
+                </GridItem>
+              </Grid>
+            )}
+          </GridItem>
+        </Grid>
+      </main>
+      <footer>footer</footer>
     </AppCtx.Provider>
   );
 };

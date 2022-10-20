@@ -11,3 +11,13 @@ body,
 #__next {
   height: 100%;
 }
+
+#__next {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+  background-color: rgb(15, 15, 15);
+}
