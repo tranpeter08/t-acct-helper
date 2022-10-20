@@ -12,28 +12,8 @@ import styles from '../styles/Home.module.css';
 import TAccountData from '../classes/TAccountData';
 import TAccount from '../components/TAccount';
 import Trx from '../classes/Trx';
-import {
-  Grid,
-  Heading,
-  GridItem,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Flex,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
-  StatArrow,
-  StatGroup,
-  Box,
-  Text,
-} from '@chakra-ui/react';
+import { Grid, Heading, GridItem, Button, Text } from '@chakra-ui/react';
+import { DownloadIcon } from '@chakra-ui/icons';
 import AddTAcctForm from '../components/AddTAcctForm';
 import Seo from '../components/Seo';
 
@@ -57,6 +37,8 @@ const Home: NextPage = (props) => {
 
   const [shouldAddTAcct, setShouldAddTAcct] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showDownloadModal, setShowDownloadModal] = useState<boolean>(false);
+  const [csvLink, setCsvLink] = useState<string>('');
   const tAcctElems: JSX.Element[] = [];
 
   let balance = 0;
@@ -126,6 +108,34 @@ const Home: NextPage = (props) => {
     setErrorMessage(null);
   }
 
+  function convertToCsv() {
+    const csvData = [];
+
+    for (const tAcct of data) {
+      for (const trx of tAcct.trxs) {
+        const row = [];
+        const title = tAcct.title;
+        row.push(title);
+        row.push(trx.dr);
+        row.push(trx.cr);
+
+        csvData.push(row.join(','));
+      }
+    }
+
+    csvData.unshift(['account', 'debit', 'credit'].join(','));
+    const csvStr = csvData.join('\r\n');
+    const blob = new Blob([csvStr], { type: 'text/csv' });
+    const link = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+
+    a.href = link;
+    a.download = 't_accounts.csv';
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
+
   useEffect(() => {
     if (shouldAddTAcct) {
       const inputField: HTMLElement | null = document.querySelector('#title');
@@ -172,11 +182,20 @@ const Home: NextPage = (props) => {
               onSubmit={addTAccount}
             />
           ) : (
-            <GridItem h='136px' p={2}>
-              <Button onClick={() => setShouldAddTAcct(true)}>
-                Add T-Account
-              </Button>
-            </GridItem>
+            <>
+              <GridItem h='136px' p={2}>
+                <Button onClick={() => setShouldAddTAcct(true)}>
+                  Add T-Account
+                </Button>
+                <Button
+                  ml={4}
+                  onClick={convertToCsv}
+                  rightIcon={<DownloadIcon />}
+                >
+                  Download CSV
+                </Button>
+              </GridItem>
+            </>
           )}
         </Grid>
 
