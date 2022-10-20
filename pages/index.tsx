@@ -35,7 +35,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import AddTAcctForm from '../components/AddTAcctForm';
-import Seo from '../components/SEO';
+import Seo from '../components/Seo';
 
 export const AppCtx = createContext({});
 
