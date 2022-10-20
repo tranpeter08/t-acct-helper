@@ -1,0 +1,76 @@
+.t-account {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  width: 360px;
+}
+
+.total,
+.h-divider,
+.title {
+  grid-column: 1 / span 9;
+}
+
+.title {
+  text-align: center;
+}
+
+.delete-t-account {
+  grid-column: 12 / span 1;
+}
+
+.add-trx,
+.trx {
+  grid-column: 1 / span 12;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.total,
+.add-trx,
+.trx {
+  display: grid;
+}
+
+.currency {
+  text-align: right;
+}
+
+/* trx rows */
+
+.debit {
+  grid-column: 1 / span 4;
+}
+
+.v-divider {
+  grid-column: 5 / span 1;
+}
+
+.credit {
+  grid-column: 6 / span 4;
+}
+
+.delete-trx {
+  grid-column: 12 / span 1;
+}
+
+/* add trx row */
+.show-add-trx {
+  grid-column: 11 / span 2;
+}
+
+.add-trx_bttn {
+  grid-column: 11 / span 1;
+}
+
+.cancel-add-trx_bttn {
+  grid-column: 12 / span 1;
+}
+
+/* totals */
+
+.total-debit {
+  grid-column: 1 / span 4;
+}
+
+.total-credit {
+  grid-column: 6 / span 4;
+}
