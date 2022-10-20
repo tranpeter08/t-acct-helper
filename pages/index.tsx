@@ -162,6 +162,22 @@ const Home: NextPage = (props) => {
           {balance !== 0 ? (balance > 0 ? '(Debit)' : '(Credit)') : ''}
         </Heading>
 
+        <Grid justifyContent='center'>
+          {shouldAddTAcct ? (
+            <AddTAcctForm
+              isInvalid={typeof errorMessage === 'string'}
+              errorMessage={errorMessage}
+              onSubmit={addTAccount}
+            />
+          ) : (
+            <GridItem h='136px' p={2}>
+              <Button onClick={() => setShouldAddTAcct(true)}>
+                Add T-Account
+              </Button>
+            </GridItem>
+          )}
+        </Grid>
+
         <Grid
           templateColumns={{
             base: 'repeat(1, 1fr)',
@@ -171,26 +187,6 @@ const Home: NextPage = (props) => {
           p={2}
         >
           {tAcctElems}
-
-          <GridItem>
-            {shouldAddTAcct ? (
-              <AddTAcctForm
-                isInvalid={typeof errorMessage === 'string'}
-                errorMessage={errorMessage}
-                onSubmit={addTAccount}
-              />
-            ) : (
-              <Grid templateColumns='repeat(10, 1fr)' p={2}>
-                <GridItem colStart={1} colSpan={8}>
-                  <Flex justifyContent='center'>
-                    <Button onClick={() => setShouldAddTAcct(true)}>
-                      Add T-Account
-                    </Button>
-                  </Flex>
-                </GridItem>
-              </Grid>
-            )}
-          </GridItem>
         </Grid>
       </main>
       <footer>

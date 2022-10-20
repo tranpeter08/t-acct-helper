@@ -11,6 +11,7 @@ import {
   IconButton,
   FormHelperText,
   FormErrorMessage,
+  Box,
 } from '@chakra-ui/react';
 import { AppCtx } from '../pages/index';
 import { AppCtxInterface } from '../types';
@@ -42,37 +43,35 @@ export default function AddTAcctForm(props: AddTAcctFormProps) {
   }
 
   return (
-    <Grid justifyContent='center' templateColumns='repeat(10, 1fr)' p={2}>
-      <GridItem colStart={1} colSpan={8} as='form' onSubmit={handleSubmit}>
-        <FormControl isRequired isInvalid={isInvalid}>
-          <Flex>
-            <FormLabel fontWeight={600}>T-Account Title</FormLabel>
-            <IconButton
-              aria-label='Cancel Create T-Account'
-              marginLeft='auto'
-              type='button'
-              onClick={handleCancelAddTAcct}
-              icon={<CloseIcon />}
-              size='xs'
-              title='Cancel'
-            >
-              Cancel
-            </IconButton>
-          </Flex>
-          <Input
-            id='title'
-            name='title'
-            type='text'
-            value={newTitle}
-            onChange={handleInputChange}
-            textAlign='center'
-          />
-          <FormErrorMessage>{errorMessage}</FormErrorMessage>
-        </FormControl>
-        <Flex justifyContent='end' paddingTop={2}>
-          <Button disabled={newTitle.length === 0}>Create T-Account</Button>
+    <GridItem as='form' onSubmit={handleSubmit} p={2} w='360px'>
+      <FormControl isRequired isInvalid={isInvalid}>
+        <Flex>
+          <FormLabel fontWeight={600}>T-Account Title</FormLabel>
+          <IconButton
+            aria-label='Cancel Create T-Account'
+            marginLeft='auto'
+            type='button'
+            onClick={handleCancelAddTAcct}
+            icon={<CloseIcon />}
+            size='xs'
+            title='Cancel'
+          >
+            Cancel
+          </IconButton>
         </Flex>
-      </GridItem>
-    </Grid>
+        <Input
+          id='title'
+          name='title'
+          type='text'
+          value={newTitle}
+          onChange={handleInputChange}
+          textAlign='center'
+        />
+        <FormErrorMessage>{errorMessage}</FormErrorMessage>
+      </FormControl>
+      <Flex justifyContent='end' paddingTop={2}>
+        <Button disabled={newTitle.length === 0}>Create T-Account</Button>
+      </Flex>
+    </GridItem>
   );
 }
