@@ -70,7 +70,9 @@ export default function AddTAcctForm(props: AddTAcctFormProps) {
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       </FormControl>
       <Flex justifyContent='end' paddingTop={2}>
-        <Button disabled={newTitle.length === 0}>Create T-Account</Button>
+        <Button type='submit' disabled={newTitle.length === 0}>
+          Create T-Account
+        </Button>
       </Flex>
     </GridItem>
   );
