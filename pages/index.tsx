@@ -35,6 +35,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import AddTAcctForm from '../components/AddTAcctForm';
+import Seo from '../components/SEO';
 
 export const AppCtx = createContext({});
 
@@ -145,6 +146,7 @@ const Home: NextPage = (props) => {
         handleCancelAddTAcct,
       }}
     >
+      <Seo />
       <main>
         <Heading
           bgColor='black'
