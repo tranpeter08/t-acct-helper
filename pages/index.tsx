@@ -193,7 +193,9 @@ const Home: NextPage = (props) => {
           </GridItem>
         </Grid>
       </main>
-      <footer>footer</footer>
+      <footer>
+        <Text>Convert to CSV</Text>
+      </footer>
     </AppCtx.Provider>
   );
 };
