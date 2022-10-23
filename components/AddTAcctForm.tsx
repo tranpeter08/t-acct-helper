@@ -43,7 +43,13 @@ export default function AddTAcctForm(props: AddTAcctFormProps) {
   }
 
   return (
-    <GridItem as='form' onSubmit={handleSubmit} p={2} w='360px'>
+    <GridItem
+      data-testid='t-acct-form'
+      as='form'
+      onSubmit={handleSubmit}
+      p={2}
+      w='360px'
+    >
       <FormControl isRequired isInvalid={isInvalid}>
         <Flex>
           <FormLabel fontWeight={600}>T-Account Title</FormLabel>
@@ -55,6 +61,7 @@ export default function AddTAcctForm(props: AddTAcctFormProps) {
             icon={<CloseIcon />}
             size='xs'
             title='Cancel'
+            data-testid='close-t-acct-form-bttn'
           >
             Cancel
           </IconButton>
@@ -66,11 +73,16 @@ export default function AddTAcctForm(props: AddTAcctFormProps) {
           value={newTitle}
           onChange={handleInputChange}
           textAlign='center'
+          data-testid='t-account-title-input'
         />
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       </FormControl>
       <Flex justifyContent='end' paddingTop={2}>
-        <Button type='submit' disabled={newTitle.length === 0}>
+        <Button
+          data-testid='t-account-title-submit-bttn'
+          type='submit'
+          disabled={newTitle.length === 0}
+        >
           Create T-Account
         </Button>
       </Flex>

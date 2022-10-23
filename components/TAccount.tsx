@@ -7,6 +7,8 @@ import {
   Input,
   Text,
   Divider as ChakraDivider,
+  Box,
+  Flex,
 } from '@chakra-ui/react';
 import { AddIcon, CheckIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import TrxRow from './TrxRow';
@@ -76,7 +78,13 @@ export default function TAccount(props: TAccountData) {
   }, [shouldAddTrx]);
 
   return (
-    <Grid id={id} templateColumns='repeat(10, 1fr)' templateRows='auto' p={2}>
+    <Grid
+      id={id}
+      data-testid='t-acct'
+      templateColumns='repeat(10, 1fr)'
+      templateRows='auto'
+      p={2}
+    >
       <GridItem borderBottom='1px solid black' colSpan={8}>
         <Heading as='h3' textAlign='center' size='lg' p={2}>
           {title}
@@ -126,15 +134,17 @@ export default function TAccount(props: TAccountData) {
               borderLeft='1px solid black'
               p={1}
             >
-              <Input
-                className='credit'
-                name='credit'
-                type='number'
-                min={0}
-                value={credit}
-                onChange={(e) => setCredit(e.target.value)}
-                textAlign='right'
-              />
+              <Box>
+                <Input
+                  className='credit'
+                  name='credit'
+                  type='number'
+                  min={0}
+                  value={credit}
+                  onChange={(e) => setCredit(e.target.value)}
+                  textAlign='right'
+                />
+              </Box>
             </GridItem>
 
             {/* Submit */}

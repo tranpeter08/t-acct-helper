@@ -28,21 +28,29 @@ export default function TrxRow(props: TrxRowProps) {
   const ctx = useContext(AppCtx) as AppCtxInterface;
 
   return (
-    <GridItem colStart={1} colSpan={10}>
+    <GridItem
+      className='trx-row'
+      data-testid='trx-row'
+      colStart={1}
+      colSpan={10}
+    >
       <Grid templateColumns='repeat(10, 1fr)' key={trx.id}>
         {/* Debit */}
         <GridItem colStart={1} colSpan={4} p={1}>
-          <Text textAlign='right'>{trx.dr === 0 ? '' : trx.dr}</Text>
+          <Text className='trx-debit' textAlign='right'>
+            {trx.dr === 0 ? '' : trx.dr}
+          </Text>
         </GridItem>
 
         {/* Credit */}
         <GridItem colStart={5} colSpan={4} borderLeft='solid black 1px' p={1}>
-          <Text textAlign='right'>{trx.cr === 0 ? '' : trx.cr}</Text>
+          <Text className='trx-credit' textAlign='right'>
+            {trx.cr === 0 ? '' : trx.cr}
+          </Text>
         </GridItem>
 
         {/* Delete Button */}
         <GridItem colStart={10} colSpan={1}>
-          <Box></Box>
           <IconButton
             aria-label='Delete Transaction'
             icon={<DeleteIcon />}

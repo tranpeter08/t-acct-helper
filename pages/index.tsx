@@ -165,11 +165,18 @@ const Home: NextPage = (props) => {
           as='h1'
           size='lg'
           p={2}
+          data-testid='home-title'
         >
           T Acount Helper
         </Heading>
 
-        <Heading as='h2' size='md' textAlign='center' p={2}>
+        <Heading
+          data-testid='balance'
+          as='h2'
+          size='md'
+          textAlign='center'
+          p={2}
+        >
           Balance: {Math.abs(balance)}{' '}
           {balance !== 0 ? (balance > 0 ? '(Debit)' : '(Credit)') : ''}
         </Heading>
@@ -184,7 +191,10 @@ const Home: NextPage = (props) => {
           ) : (
             <>
               <GridItem h='136px' p={2}>
-                <Button onClick={() => setShouldAddTAcct(true)}>
+                <Button
+                  data-testid='add-t-acct-bttn'
+                  onClick={() => setShouldAddTAcct(true)}
+                >
                   Add T-Account
                 </Button>
                 <Button
