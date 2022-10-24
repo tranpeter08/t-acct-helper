@@ -279,7 +279,11 @@ const Home: NextPage<HomeProps> = (props) => {
         </Grid>
       </main>
       <footer>
-        <Text>Convert to CSV</Text>
+        <Grid justifyContent='center' p={2}>
+          <Text color='gray.700'>
+            Copyright © {new Date().getFullYear()} Peter Tran
+          </Text>
+        </Grid>
       </footer>
     </AppCtx.Provider>
   );
