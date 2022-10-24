@@ -5,40 +5,71 @@ import {
   ChangeEvent,
   useEffect,
 } from 'react';
-import type { NextPage, GetStaticProps } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
+import type { NextPage, GetServerSideProps } from 'next';
+import {
+  Grid,
+  Heading,
+  GridItem,
+  Button,
+  Text,
+  IconButton,
+  Box,
+  Divider,
+  useToast,
+} from '@chakra-ui/react';
+import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import styles from '../styles/Home.module.css';
 import TAccountData from '../classes/TAccountData';
 import TAccount from '../components/TAccount';
 import Trx from '../classes/Trx';
-import { Grid, Heading, GridItem, Button, Text } from '@chakra-ui/react';
-import { DownloadIcon } from '@chakra-ui/icons';
 import AddTAcctForm from '../components/AddTAcctForm';
 import Seo from '../components/Seo';
+import validateQueryData from '../utils/validateQueryData';
+
+const defaultData: TAccountData[] = [
+  {
+    id: 'aaa',
+    title: 'Cash (Example)',
+    trxs: [
+      { id: 'o0o', dr: 9, cr: 0 },
+      { id: 'o01', dr: 0, cr: 9 },
+    ],
+  },
+];
 
 export const AppCtx = createContext({});
 
-const getStaticProps: GetStaticProps = (ctx) => {
-  return { props: {} };
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { data } = ctx.query;
+  const props: { [key: string]: any } = { data: [] };
+
+  try {
+    if (typeof data === 'string') {
+      const tAccts = JSON.parse(data);
+      validateQueryData(tAccts);
+      props.data = tAccts;
+    } else {
+      props.data = defaultData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+  return {
+    props,
+  };
 };
 
-const Home: NextPage = (props) => {
-  const [data, setData] = useState<TAccountData[]>([
-    {
-      id: 'aaa',
-      title: 'Cash',
-      trxs: [
-        { id: 'o0o', dr: 9, cr: 0 },
-        { id: 'o01', dr: 0, cr: 9 },
-      ],
-    },
-  ]);
+interface HomeProps {
+  data?: TAccountData[];
+}
 
+const Home: NextPage<HomeProps> = (props) => {
+  const initData = Array.isArray(props.data) ? props.data : [];
+  const [data, setData] = useState<TAccountData[]>(initData);
   const [shouldAddTAcct, setShouldAddTAcct] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [showDownloadModal, setShowDownloadModal] = useState<boolean>(false);
-  const [csvLink, setCsvLink] = useState<string>('');
+  const toast = useToast();
   const tAcctElems: JSX.Element[] = [];
 
   let balance = 0;
@@ -61,8 +92,8 @@ const Home: NextPage = (props) => {
 
     if (title === '') return;
 
-    for (const d of data) {
-      if (title.toLowerCase() === d.title.toLowerCase()) {
+    for (const tAcct of data) {
+      if (title.toLowerCase() === tAcct.title.toLowerCase()) {
         titleExists = true;
         break;
       }
@@ -136,6 +167,23 @@ const Home: NextPage = (props) => {
     a.remove();
   }
 
+  async function copyLink() {
+    const url = window.location.href;
+    const json = JSON.stringify(data);
+    const prms = new URLSearchParams();
+    prms.append('data', json);
+
+    navigator.clipboard.writeText(url + '?' + prms);
+
+    toast({
+      title: 'Link copied to clipboard!',
+      status: 'info',
+      duration: 2000,
+      isClosable: true,
+      position: 'top',
+    });
+  }
+
   useEffect(() => {
     if (shouldAddTAcct) {
       const inputField: HTMLElement | null = document.querySelector('#title');
@@ -170,17 +218,6 @@ const Home: NextPage = (props) => {
           T Acount Helper
         </Heading>
 
-        <Heading
-          data-testid='balance'
-          as='h2'
-          size='md'
-          textAlign='center'
-          p={2}
-        >
-          Balance: {Math.abs(balance)}{' '}
-          {balance !== 0 ? (balance > 0 ? '(Debit)' : '(Credit)') : ''}
-        </Heading>
-
         <Grid justifyContent='center'>
           {shouldAddTAcct ? (
             <AddTAcctForm
@@ -197,16 +234,37 @@ const Home: NextPage = (props) => {
                 >
                   Add T-Account
                 </Button>
-                <Button
+                <IconButton
+                  aria-label='Download as CSV'
                   ml={4}
                   onClick={convertToCsv}
-                  rightIcon={<DownloadIcon />}
-                >
-                  Download CSV
-                </Button>
+                  icon={<DownloadIcon />}
+                  title='Download as CSV'
+                />
+                <IconButton
+                  ml={4}
+                  aria-label='Share link'
+                  onClick={copyLink}
+                  icon={<ExternalLinkIcon />}
+                  title='Share link'
+                />
               </GridItem>
             </>
           )}
+        </Grid>
+
+        <Grid justifyContent='center'>
+          <Heading
+            data-testid='balance'
+            as='h2'
+            size='md'
+            textAlign='center'
+            p={2}
+          >
+            Balance: {Math.abs(balance)}{' '}
+            {balance !== 0 ? (balance > 0 ? '(Debit)' : '(Credit)') : ''}
+          </Heading>
+          <Divider w={300} />
         </Grid>
 
         <Grid
