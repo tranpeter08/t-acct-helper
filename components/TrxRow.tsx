@@ -51,13 +51,17 @@ export default function TrxRow(props: TrxRowProps) {
 
         {/* Delete Button */}
         <GridItem colStart={10} colSpan={1}>
-          <IconButton
-            aria-label='Delete Transaction'
-            icon={<DeleteIcon />}
-            size='xs'
-            onClick={() => ctx.removeTrx(id, trx.id)}
-            title='Delete Transaction'
-          />
+          <Grid alignItems='center' height='100%'>
+            <GridItem>
+              <IconButton
+                aria-label='Delete Transaction'
+                icon={<DeleteIcon />}
+                size='xs'
+                onClick={() => ctx.removeTrx(id, trx.id)}
+                title='Delete Transaction'
+              />
+            </GridItem>
+          </Grid>
         </GridItem>
       </Grid>
     </GridItem>
