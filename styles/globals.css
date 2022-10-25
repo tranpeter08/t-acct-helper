@@ -21,3 +21,8 @@ footer {
   margin-top: auto;
   background-color: rgb(15, 15, 15);
 }
+
+.t-acct-row {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
